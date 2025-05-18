@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from transformers import BertTokenizer
 import nltk
 
-ntlk.download('stopwords')
+nltk.download('stopwords')
 STOPWORDS = set(stopwords.words('english'))
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
@@ -15,12 +15,17 @@ def parse_chat(filepath):
     user=[]
     ai=[]
     with open(filepath, 'r', encoding = 'utf-8') as file:
-        for line in file:
-            if line.startswith("User:"):
-                user.append(line[len("User:"):].strip())
-            elif line.startswith("AI:"):
-                ai.append(line[len("AI:"):].strip())
-            return user, ai
+        content = file.read()
+    
+    pattern = re.findall(r'(User|AI):\s*(.*?)(?=(?:User|AI):|\Z)', content, re.DOTALL)
+    
+    for speaker, message in pattern:
+        cleaned = message.strip()
+        if speaker == 'User':
+            user.append(cleaned)
+        elif speaker == "AI":
+            ai.append(cleaned)
+    return user, ai
 
 def msg_stats(user, ai):
     return{
@@ -29,7 +34,7 @@ def msg_stats(user, ai):
         "AI": len(ai)
     }
 
-def bert_token(text):
+def bert_tokenize(text):
     tokens = tokenizer.tokenize(text.lower())
     return [t for t in tokens if t not in STOPWORDS and re.match(r'[a-z]+', t)]
 
@@ -46,19 +51,21 @@ def tfidf_key(messages, top_n=5):
 def generate_summary(stats, keywords):
     return (
         f"\nSummary:\n"
-        f"- Total exchanges: {stats['total']}\n"
-        f"- User messages: {stats['user']}\n"
-        f"- AI messages: {stats['ai']}\n"
+        f"- Total exchanges: {stats['Total']}\n"
+        f"- User messages: {stats['User']}\n"
+        f"- AI messages: {stats['AI']}\n"
         f"- Top TF-IDF keywords: {', '.join(keywords)}\n"
     )
 
 def plot_msg_stats(stats, filename=None):
     sns.set(style="whitegrid")
-    data = {'Speaker': ['User', 'AI'], 'Messages': [stats['user'], stats['ai']]}
+    data = {'Speaker': ['User', 'AI'], 'Messages': [stats['User'], stats['AI']]}
     plt.figure(figsize=(6, 4))
     sns.barplot(x='Speaker', y='Messages', data=data)
     plt.title('Message Count by Speaker')
     plt.tight_layout()
     if filename:
         plt.savefig(filename)
-    plt.show()
+    plt.show(block=False)
+    plt.pause(10)
+    plt.close()
