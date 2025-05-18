@@ -2,6 +2,17 @@ import os
 from utils import parse_chat, msg_stats, tfidf_key, generate_summary, plot_msg_stats
 
 def main():
+    """
+    Main driver function for summarizing chat logs.
+
+    - Scans the `chat_logs/` folder for .txt files.
+    - Parses each chat log.
+    - Computes message statistics.
+    - Extracts top TF-IDF keywords using BERT tokenization.
+    - Prints a textual summary.
+    - Plots message count using seaborn/matplotlib.
+    """
+    
     folder_path = 'chat_logs'
     chat_files = [f for f in os.listdir(folder_path) if f.endswith('.txt')]
 
