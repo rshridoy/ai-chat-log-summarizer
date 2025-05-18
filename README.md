@@ -17,7 +17,7 @@ User: Hello!
 AI: Hi! How can I assist you today?
 User: Can you explain what machine learning is?
 AI: Certainly! Machine learning is a field of AI that allows systems to learn from data.
-
+```
 
 ---
 
@@ -28,11 +28,13 @@ AI: Certainly! Machine learning is a field of AI that allows systems to learn fr
 ```bash
 git clone https://github.com/your-username/ai-chat-log-summarizer.git
 cd ai-chat-log-summarizer
+```
 
 ### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### 3. Add chat log files
 
@@ -42,6 +44,7 @@ Place your .txt chat logs in the chat_logs/ directory. The format must begin eac
 
 ```bash
 python main.py
+``` 
 
 ## Example Output
 
@@ -53,6 +56,7 @@ Summary:
 - User messages: 2
 - AI messages: 2
 - Top TF-IDF keywords: machine, learning, data, systems, ai
+```
 
 ## 💡 Technologies Used
 - Python 3.7+
