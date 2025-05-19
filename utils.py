@@ -117,7 +117,7 @@ def plot_msg_stats(stats, filename=None):
         stats (dict): Message statistics.
         filename (str, optional): If provided, saves the plot to this file.
     """
-    
+
     sns.set(style="whitegrid")
     data = {'Speaker': ['User', 'AI'], 'Messages': [stats['User'], stats['AI']]}
     plt.figure(figsize=(6, 4))
@@ -127,5 +127,5 @@ def plot_msg_stats(stats, filename=None):
     if filename:
         plt.savefig(filename)
     plt.show(block=False)
-    plt.pause(10)
+    plt.pause(3)
     plt.close()
