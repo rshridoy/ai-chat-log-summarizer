@@ -30,17 +30,23 @@ git clone https://github.com/your-username/ai-chat-log-summarizer.git
 cd ai-chat-log-summarizer
 ```
 
-### 2. Install Dependencies
+### 2. Create and Activate a Virtual Environment
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Add chat log files
+### 4. Add chat log files
 
 Place your .txt chat logs in the chat_logs/ directory. The format must begin each message with either User: or AI:.
 
-### 4. Run the summarizer
+### 5. Run the summarizer
 
 ```bash
 python main.py
